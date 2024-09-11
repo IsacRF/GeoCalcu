@@ -1,0 +1,14 @@
+num = map(str, (input().split()))
+num_list = list(num)
+A = float(num_list[0])
+B = float(num_list[1])
+C = float(num_list[2])
+Perimetro = A+B+C
+Altura = C
+Base = A+B
+Area = (Altura*Base)/2
+
+if (A+B > C) and (B+C>A) and (C+A>B):
+    print(f"Perimetro = {Perimetro:.1f}")
+else:
+    print(f"Area = {Area:.1f}")
