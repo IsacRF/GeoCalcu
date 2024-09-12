@@ -1,14 +1,39 @@
-num = map(str, (input().split()))
-num_list = list(num)
-A = float(num_list[0])
-B = float(num_list[1])
-C = float(num_list[2])
-Perimetro = A+B+C
-Altura = C
-Base = A+B
-Area = (Altura*Base)/2
+import math #Estou importando a biblioteca
 
-if (A+B > C) and (B+C>A) and (C+A>B):
-    print(f"Perimetro = {Perimetro:.1f}")
+#Pergunta para saber os lados.
+pergunta_lados = int(input("Quantos lados tem a sua forma geometrica? 3, 4 ou 0? "))
+
+#Circulo
+if pergunta_lados == 0:
+    pergunta_A = input("Sua forma é redonda? sim? ").strip().lower() # é para garantir que a entrada vai ser informada corretamente, não importa como se escreva
+    if pergunta_A == 'sim':
+        print("Você tem um circulo como forma!")
+        raio = float(input("Qual o raio do círculo? "))
+        area_circulo = math.pi * (raio ** 2)  # Calcula a área usando math.pi
+        circunferencia = 2 * math.pi * raio  # Calcula a circunferência usando math.pi
+        print(f"A área do círculo é {area_circulo:.2f} e a circunferência é {circunferencia:.2f}")
+
+#Triangulo
+elif pergunta_lados == 3:
+    A = float(input("Qual o tamanho? "))
+    B = float(input("Qual o tamanho? "))
+    C = float(input("Qual o tamanho? "))
+    #Isso aqui é para o perimetro triângulo.
+    if (A+B > C) and (B+C>A) and (C+A>B):
+        perimetro = A+B+C
+        print("Sua forma é um triângulo!")
+        print(f"O Perimetro é {perimetro:.1f}")
+        #Esse código é para definir se o triângulo é equilátero
+        if A == B == C:
+            print("Esse triângulo é Equilátero")
+#retangulo ou quadrado
+elif pergunta_lados == 4:
+    largura = float(input("Qual a largura? "))
+    comprimento = float(input("Qual o comprimento? "))
+    perimetro2 = 2*(largura+comprimento)
+    print(f"Você tem um retângulo de perimetro {perimetro2:.1f}")
+    if largura == comprimento:
+        print("Todos os lados são iguais. Você tem um quadrado!")
+#Isso aqui é para informar o usuario sobre um número invalido.
 else:
-    print(f"Area = {Area:.1f}")
+    print("Esse número é invalido, tente os informados!!!")
