@@ -25,8 +25,32 @@ def calcular_area_triangulo(a, b, c):
     area = math.sqrt(s * (s - a) * (s - b) * (s - c))  # Fórmula de Herão
     return area
 
+# Função para calcular os ângulos do triângulo usando a Lei dos Cossenos
+def calcular_angulos(a, b, c):
+    angulo_A = math.degrees(math.acos((b**2 + c**2 - a**2) / (2 * b * c)))
+    angulo_B = math.degrees(math.acos((a**2 + c**2 - b**2) / (2 * a * c)))
+    angulo_C = 180 - angulo_A - angulo_B  # A soma dos ângulos internos é sempre 180°
+    return angulo_A, angulo_B, angulo_C
+
+# Função para identificar o tipo de triângulo com base nos ângulos
+def tipo_triangulo_angulos(angulo_A, angulo_B, angulo_C):
+    if 90 in (round(angulo_A), round(angulo_B), round(angulo_C)):
+        return "Retângulo"
+    elif all(angulo < 90 for angulo in (angulo_A, angulo_B, angulo_C)):
+        return "Acutângulo"
+    else:
+        return "Obtusângulo"
+
 #Pergunta para saber os lados.
-pergunta_lados = int(input("Quantos lados tem a sua forma geometrica? 3, 4 ou 0? "))
+while True:
+    try:
+        pergunta_lados = int(input("Quantos lados tem a sua forma geométrica? 3, 4 ou 0? "))
+        if pergunta_lados in [0, 3, 4]:
+            break  # Entrada válida, sai do loop
+        else:
+            print("Por favor, insira 0, 3 ou 4.")
+    except ValueError:
+        print("Entrada inválida! Por favor, insira um número.")
 
 #Circulo
 if pergunta_lados == 0:
@@ -40,20 +64,38 @@ if pergunta_lados == 0:
 
 #Triangulo
 elif pergunta_lados == 3:
-    A = float(input("Qual o tamanho do lado A? "))
-    B = float(input("Qual o tamanho do lado B? "))
-    C = float(input("Qual o tamanho do lado C? "))
+    while True:
+        try:
+            A = float(input("Qual o tamanho do lado A? "))
+            B = float(input("Qual o tamanho do lado B? "))
+            C = float(input("Qual o tamanho do lado C? "))
+            if A > 0 and B > 0 and C > 0:
+                break  # Se todos os valores forem positivos, o loop é encerrado
+            else:
+                print("Os lados do triângulo precisam ser valores maiores que zero.")
+        except ValueError:
+            print("Entrada inválida! Por favor, insira um número.")
 
     if validar_triangulo(A, B, C):  # Usando a função para validar o triângulo
         perimetro = A + B + C
         print("Sua forma é um triângulo!")
         print(f"O Perímetro é {perimetro:.1f}")
-        tipo_triangulo = identificar_triangulo(A, B, C)  # Identificando o tipo de triângulo
+        
+        # Identificando o tipo de triângulo pelos lados
+        tipo_triangulo = identificar_triangulo(A, B, C)
         print(f"Esse triângulo é {tipo_triangulo}")
 
         # Calculando e exibindo a área
         area_triangulo = calcular_area_triangulo(A, B, C)
         print(f"A área do triângulo é {area_triangulo:.2f}")
+
+        # Calculando e exibindo os ângulos
+        angulo_A, angulo_B, angulo_C = calcular_angulos(A, B, C)
+        print(f"Os ângulos do triângulo são: A = {angulo_A:.2f}, B = {angulo_B:.2f}, C = {angulo_C:.2f}")
+
+        # Identificando o tipo de triângulo pelos ângulos
+        tipo_angulos = tipo_triangulo_angulos(angulo_A, angulo_B, angulo_C)
+        print(f"O triângulo é {tipo_angulos}")
     else:
         print("Os valores fornecidos não formam um triângulo válido.")
 
